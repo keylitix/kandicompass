@@ -244,15 +244,16 @@ const DashboardPage = () => {
           </div>
 
           {/* Charts */}
-          <div className='col-xxl-6'>
+          <div className=''>
             <Card stretch>
               <CardBody >
                 <div className='fs-5 fw-bold mb-3'>Bead Inventory Overview</div>
                 {/* <LineWithAnnotations /> */}
-                <div className='d-flex'>
+                <div className='d-flex gap-3 '>
                   <LineZoomableTimeSeries />
-                  <DonutBasic />
+                    <DonutBasic />
                 </div>
+              
                    {/* <LineWithAnnotations /> */}
 
               </CardBody>
