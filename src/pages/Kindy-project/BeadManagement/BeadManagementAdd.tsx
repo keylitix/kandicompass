@@ -39,7 +39,6 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
   });
 
   const threads = threadsResponse?.data?.data || [];
-  console.log("threadsthreadsthreads",threads);
   
 
 
@@ -472,9 +471,9 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
             </div>
 
             <div className='col-md-12'>
-              <h5 className='mb-3'>Additional Information</h5>
+              {/* <h5 className='mb-3'>Additional Information</h5> */}
               <div className='row g-3'>
-                <FormGroup id='isActive' label='Status' className='col-md-3'>
+                {/* <FormGroup id='isActive' label='Status' className='col-md-3'>
                   <div className="form-check form-switch">
                     <input
                       type="checkbox"
@@ -488,7 +487,7 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
                       {formik.values.isActive ? 'Active' : 'Inactive'}
                     </label>
                   </div>
-                </FormGroup>
+                </FormGroup> */}
 
                 <FormGroup id='description' label='Description' className='col-md-12'>
                   <Textarea
