@@ -41,8 +41,8 @@ export const dashboardPagesMenu = {
 		subMenu: null,
 	  },
 	  Thred: {
-		id: 'Thred',
-		text: 'Thred',
+		id: 'Thread',
+		text: 'Thread',
 		path: '/thred',
 		icon: 'Category', 
 	  },
