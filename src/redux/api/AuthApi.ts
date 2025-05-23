@@ -35,13 +35,26 @@ export const authApi = createApi({
       query: (id) => `/User/getById/${id}`,
       transformResponse: (response) => response.data,
     }),
-    updateUser: builder.mutation({
+     updateUser: builder.mutation({
       query: ({ id, updatedData }) => ({
         url: `/User/update/${id}`,
-        method: 'POST',
+        method: 'PUT',
         body: updatedData,
       }),
     }),
+    getAllUsers: builder.query({
+  query: ({ pageNo = 1, pageSize = 100 }) => ({
+    url: '/User/getall',
+    method: 'GET',
+    params: {
+      page_no: pageNo,
+      page_size: pageSize,
+    },
+  }),
+  transformResponse: (response) => response.data, // Adjust according to your API response structure
+}),
+
+
   }),
 });
 
@@ -51,4 +64,5 @@ export const {
   useGetMeQuery,
   useGetUserByIdQuery,
   useUpdateUserMutation,
+    useGetAllUsersQuery, 
 } = authApi;

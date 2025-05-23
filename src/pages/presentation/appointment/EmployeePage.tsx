@@ -1,595 +1,369 @@
-// import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import dayjs from 'dayjs';
-// import classNames from 'classnames';
-// import { getUserDataWithId } from '../../../common/data/userDummyData';
-// import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-// import Page from '../../../layout/Page/Page';
-// import SubHeader, {
-// 	SubHeaderLeft,
-// 	SubHeaderRight,
-// 	SubheaderSeparator,
-// } from '../../../layout/SubHeader/SubHeader';
-// import Button from '../../../components/bootstrap/Button';
-// import Card, {
-// 	CardActions,
-// 	CardBody,
-// 	CardHeader,
-// 	CardLabel,
-// 	CardTitle,
-// } from '../../../components/bootstrap/Card';
-// import Avatar from '../../../components/Avatar';
-// import Icon from '../../../components/icon/Icon';
-// import { demoPagesMenu } from '../../../menu';
-// import Badge from '../../../components/bootstrap/Badge';
-// import Dropdown, {
-// 	DropdownItem,
-// 	DropdownMenu,
-// 	DropdownToggle,
-// } from '../../../components/bootstrap/Dropdown';
-// import Chart, { IChartOptions } from '../../../components/extras/Chart';
-// import dummyEventsData from '../../../common/data/dummyEventsData';
-// import { priceFormat } from '../../../helpers/helpers';
-// import EVENT_STATUS from '../../../common/data/enumEventStatus';
-// import Alert from '../../../components/bootstrap/Alert';
-// import CommonAvatarTeam from '../../../common/other/CommonAvatarTeam';
-// import COLORS from '../../../common/data/enumColors';
-// import useDarkMode from '../../../hooks/useDarkMode';
-// import useTourStep from '../../../hooks/useTourStep';
-// import { useGetUserByIdQuery } from '../../../redux/api/AuthApi';
-// import Profile from '../../../assets/img/user6.png';
-// import { FeaturedPlayList } from '../../../components/icon/material-icons';
-
-// const EmployeePage = () => {
-// 	useTourStep(19);
-// 	const { darkModeStatus } = useDarkMode();
-
-// 	const { id } = useParams();
-// 	// const data = getUserDataWithId(id);
-// 	const { data, error, isLoading } = useGetUserByIdQuery(id);
-// 	const userData = data?.[0];
-// 	console.log('====data====', data?.[0]);
-
-// 	const [dayHours] = useState<IChartOptions>({
-// 		series: [
-// 			{
-// 				data: [8, 12, 15, 20, 15, 22, 9],
-// 			},
-// 		],
-// 		options: {
-// 			colors: [process.env.REACT_APP_SUCCESS_COLOR],
-// 			chart: {
-// 				type: 'radar',
-// 				width: 200,
-// 				height: 200,
-// 				sparkline: {
-// 					enabled: true,
-// 				},
-// 			},
-// 			xaxis: {
-// 				categories: [
-// 					'Monday',
-// 					'Tuesday',
-// 					'Wednesday',
-// 					'Thursday',
-// 					'Friday',
-// 					'Saturday',
-// 					'Sunday',
-// 				],
-// 				// convertedCatToNumeric: false,
-// 			},
-// 			tooltip: {
-// 				theme: 'dark',
-// 				fixed: {
-// 					enabled: false,
-// 				},
-// 				x: {
-// 					show: true,
-// 				},
-// 				y: {
-// 					title: {
-// 						// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// 						formatter(seriesName) {
-// 							return 'Hours';
-// 						},
-// 					},
-// 				},
-// 			},
-// 			stroke: {
-// 				curve: 'smooth',
-// 				width: 2,
-// 			},
-// 			plotOptions: {
-// 				radar: {
-// 					polygons: {
-// 						strokeColors: `${COLORS.SUCCESS.code}50`,
-// 						strokeWidth: '1',
-// 						connectorColors: `${COLORS.SUCCESS.code}50`,
-// 					},
-// 				},
-// 			},
-// 		},
-// 	});
-
-// 	const [isEditing, setIsEditing] = useState(false);
-// 	const [showChangePassword, setShowChangePassword] = useState(false);
-// 	const [profile, setProfile] = useState({
-// 		name: 'John Doe',
-// 		email: 'john.doe@example.com',
-// 		phone: '+1 123 456 7890',
-// 	});
-
-// 	const [passwordData, setPasswordData] = useState({
-// 		current: '',
-// 		new: '',
-// 		confirm: '',
-// 		showPassword: false,
-// 	});
-
-// 	const handleEditToggle = () => setIsEditing(!isEditing);
-// 	const handlePasswordToggle = () => setShowChangePassword(!showChangePassword);
-
-// 	const handleChange = (e: any) => {
-// 		setProfile({ ...profile, [e.target.name]: e.target.value });
-// 	};
-
-// 	const handlePasswordChange = (e: any) => {
-// 		setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
-// 	};
-
-// 	const toggleShowPassword = () => {
-// 		setPasswordData((prev) => ({
-// 			...prev,
-// 			showPassword: !prev.showPassword,
-// 		}));
-// 	};
-
-// 	return (
-// 		<PageWrapper title={`${userData?.fullName}`}>
-// 			<Page>
-// 				<div className='pt-3 pb-5 d-flex align-items-center'>
-// 					<span className='display-4 fw-bold me-3'>{`${`${userData?.fullName}`}`}</span>
-// 					<span className='border border-success border-2 text-success fw-bold px-3 py-2 rounded'>
-// 						{userData?.role}
-// 					</span>
-// 				</div>
-// 				<div className='row'>
-// 					<div className='col-lg-4'>
-// 						<Card className='shadow-3d-info'>
-// 							<CardBody>
-// 								<div className='row g-5'>
-// 									<div className='col-12 d-flex justify-content-center'>
-// 										<Avatar
-// 											src={Profile}
-// 											srcSet={Profile}
-// 											style={{ width: '500px', height: '250px' }}
-// 										/>
-// 									</div>
-// 								</div>
-// 							</CardBody>
-// 						</Card>
-// 					</div>
-// 					<div className='col-lg-8'>
-// 						<Card className='shadow-3d-primary'>
-// 							<CardHeader className='d-flex justify-content-between align-items-center'>
-// 								<CardTitle className='h4 mb-0'>My Profile</CardTitle>
-// 								<button
-// 									className='btn btn-outline-primary'
-// 									onClick={handleEditToggle}>
-// 										Edit
-// 								</button>
-// 							</CardHeader>
-// 							<CardBody>
-// 								{!isEditing ? (
-// 									<div>
-// 										<p>
-// 											<strong>Name:</strong> {profile.name}
-// 										</p>
-// 										<p>
-// 											<strong>Email:</strong> {profile.email}
-// 										</p>
-// 										<p>
-// 											<strong>Phone:</strong> {profile.phone}
-// 										</p>
-// 									</div>
-// 								) : (
-// 									<form>
-// 										<div className='mb-3'>
-// 											<label>Name</label>
-// 											<input
-// 												type='text'
-// 												className='form-control'
-// 												name='name'
-// 												value={profile.name}
-// 												onChange={handleChange}
-// 											/>
-// 										</div>
-// 										<div className='mb-3'>
-// 											<label>Email</label>
-// 											<input
-// 												type='email'
-// 												className='form-control'
-// 												name='email'
-// 												value={profile.email}
-// 												onChange={handleChange}
-// 											/>
-// 										</div>
-// 										<div className='mb-3'>
-// 											<label>Phone</label>
-// 											<input
-// 												type='text'
-// 												className='form-control'
-// 												name='phone'
-// 												value={profile.phone}
-// 												onChange={handleChange}
-// 											/>
-// 										</div>
-// 									</form>
-// 								)}
-
-
-								
-// 							</CardBody>
-// 						</Card>
-// 						<Card className='shadow-3d-primary'>
-// 							<CardHeader>
-// 								<CardLabel icon='Task' iconColor='danger'>
-// 									<CardTitle>
-// 										<CardLabel tag='div' className='h5'>
-// 											Password Manager
-// 										</CardLabel>
-// 									</CardTitle>
-// 								</CardLabel>
-// 							</CardHeader>
-// 							<CardBody>
-// 								<button
-// 									className='btn btn-outline-primary'
-// 									onClick={handlePasswordToggle}>
-// 									{showChangePassword ? 'Cancel' : 'Change Password'}
-// 								</button>
-
-// 								{showChangePassword && (
-// 									<div className='mt-4'>
-// 										<div className='mb-3'>
-// 											<label>Current Password</label>
-// 											<input
-// 												type={
-// 													passwordData.showPassword ? 'text' : 'password'
-// 												}
-// 												className='form-control'
-// 												name='current'
-// 												value={passwordData.current}
-// 												onChange={handlePasswordChange}
-// 											/>
-// 										</div>
-// 										<div className='mb-3'>
-// 											<label>New Password</label>
-// 											<input
-// 												type={
-// 													passwordData.showPassword ? 'text' : 'password'
-// 												}
-// 												className='form-control'
-// 												name='new'
-// 												value={passwordData.new}
-// 												onChange={handlePasswordChange}
-// 											/>
-// 										</div>
-// 										<div className='mb-3'>
-// 											<label>Confirm New Password</label>
-// 											<input
-// 												type={
-// 													passwordData.showPassword ? 'text' : 'password'
-// 												}
-// 												className='form-control'
-// 												name='confirm'
-// 												value={passwordData.confirm}
-// 												onChange={handlePasswordChange}
-// 											/>
-// 										</div>
-// 										<div className='mb-3 form-check'>
-// 											<input
-// 												type='checkbox'
-// 												className='form-check-input'
-// 												id='showPassToggle'
-// 												onChange={toggleShowPassword}
-// 											/>
-// 											<label
-// 												className='form-check-label'
-// 												htmlFor='showPassToggle'>
-// 												Show Passwords
-// 											</label>
-// 										</div>
-// 										<button className='btn btn-primary'>Update Password</button>
-// 									</div>
-// 								)}
-// 							</CardBody>
-// 						</Card>
-// 						{/* <Card>
-// 							<CardHeader>
-// 								<CardLabel icon='Task' iconColor='danger'>
-// 									<CardTitle>
-// 										<CardLabel tag='div' className='h5'>
-// 											created Thred
-// 										</CardLabel>
-// 									</CardTitle>
-// 								</CardLabel>
-// 							</CardHeader>
-// 							<CardBody>
-// 								<div className='table-responsive'>
-// 									<table className='table table-modern mb-0'>
-// 										<thead>
-// 											<tr>
-// 												<th>Thread  ID</th>
-// 												<th>Thread  Name</th>
-// 												<th>Visibility</th>
-// 												<th>Total Members</th>
-// 												<th>QR Code</th>
-// 											</tr>
-// 										</thead>
-// 										<tbody>
-// 											{ data && data.map((item : any) => (
-// 												<tr key={item.id}>
-// 													<td>
-// 														<div className='d-flex align-items-center'>
-// 															<span
-// 																className={classNames(
-// 																	'badge',
-// 																	'border border-2 border-light',
-// 																	'rounded-circle',
-// 																	'bg-success',
-// 																	'p-2 me-2',
-// 																	`bg-${item?.status?.color}`,
-// 																)}>
-// 																<span className='visually-hidden'>
-// 																	{item.status?.fullName}
-// 																</span>
-// 															</span>
-// 															<span className='text-nowrap'>
-// 																{dayjs(
-// 																	`${item.date} ${item.time}`,
-// 																).format('MMM Do YYYY, h:mm a')}
-// 															</span>
-// 														</div>
-// 													</td>
-// 													<td>
-// 														<div>
-// 															<div>{item?.customer?.name}</div>
-// 															<div className='small text-muted'>
-// 																{item?.customer?.email}
-// 															</div>
-// 														</div>
-// 													</td>
-// 													<td>{item?.service?.name}</td>
-// 													<td>{item?.duration}</td>
-// 													<td>
-// 														{item?.payment && priceFormat(item?.payment)}
-// 													</td>
-// 													<td>
-// 														<Dropdown>
-// 															<DropdownToggle hasIcon={false}>
-// 																<Button
-// 																	isLink
-// 																	color={item?.status?.color}
-// 																	icon='Circle'
-// 																	className='text-nowrap'>
-// 																	{item?.status?.name}
-// 																</Button>
-// 															</DropdownToggle>
-// 															<DropdownMenu>
-// 																{Object.keys(EVENT_STATUS).map(
-// 																	(key) => (
-// 																		<DropdownItem key={key}>
-// 																			<div>
-// 																				<Icon
-// 																					icon='Circle'
-// 																					color={
-// 																						EVENT_STATUS[
-// 																							key
-// 																						].color
-// 																					}
-// 																				/>
-// 																				{
-// 																					EVENT_STATUS[
-// 																						key
-// 																					].name
-// 																				}
-// 																			</div>
-// 																		</DropdownItem>
-// 																	),
-// 																)}
-// 															</DropdownMenu>
-// 														</Dropdown>
-// 													</td>
-// 												</tr>
-// 											))}
-// 										</tbody>
-// 									</table>
-// 								</div>
-// 								{!data?.length && (
-// 									<Alert color='warning' isLight icon='Report' className='mt-3'>
-// 										There is no scheduled and assigned task.
-// 									</Alert>
-// 								)}
-// 							</CardBody>
-// 						</Card> */}
-// 					</div>
-// 				</div>
-// 			</Page>
-// 		</PageWrapper>
-// 	);
-// };
-
-// export default EmployeePage;
-
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetUserByIdQuery, useUpdateUserMutation } from '../../../redux/api/AuthApi';
+import {
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
+} from '../../../redux/api/AuthApi';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Card, {
-	CardBody,
-	CardHeader,
-	CardTitle,
-	CardLabel,
+  CardBody,
+  CardHeader,
+  CardTitle,
 } from '../../../components/bootstrap/Card';
 import Avatar from '../../../components/Avatar';
 import Alert from '../../../components/bootstrap/Alert';
-import Profile from '../../../assets/img/user6.png';
+import BackupProfile from '../../../assets/img/user6.png';
+import LoadingWrapper from '../../Kindy-project/other/onLoading';
+import ErrorWrapper from '../../Kindy-project/other/onError';
 
-const EmployeePage = () => {
-	const { id } = useParams();
+interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
 
-	// Fetch user data by ID
-	const { data, error, isLoading } = useGetUserByIdQuery(id);
-	const userData = data?.[0];
+interface Profile {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  profilePicture: string;
+  dateOfBirth: string;
+  gender: string;
+  address: Address;
+}
 
-	// Update user mutation
-	const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+const EmployeePage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const { data, error, isLoading } = useGetUserByIdQuery(id!);
+  const userData = data?.[0];
 
-	// State for editing
-	const [isEditing, setIsEditing] = useState(false);
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
-	// Profile state
-	const [profile, setProfile] = useState({
-		name: '',
-		email: '',
-		phone: '',
-	});
+  const [isEditing, setIsEditing] = useState(false);
 
-	// Sync user data into profile form
-	useEffect(() => {
-		if (userData) {
-			setProfile({
-				name: userData.fullName || '',
-				email: userData.email || '',
-				phone: userData.phone || '',
-			});
-		}
-	}, [userData]);
+  const [profile, setProfile] = useState<Profile>({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    profilePicture: '',
+    dateOfBirth: '',
+    gender: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+    },
+  });
 
-	// Toggle edit mode
-	const handleEditToggle = () => setIsEditing(!isEditing);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-	// Handle input change
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setProfile({ ...profile, [e.target.name]: e.target.value });
-	};
+  useEffect(() => {
+    if (userData) {
+      setProfile({
+        fullName: userData.fullName || '',
+        email: userData.email || '',
+        phoneNumber: userData.phoneNumber || '',
+        profilePicture: userData.profilePicture || '',
+        dateOfBirth: userData.dateOfBirth?.split('T')[0] || '',
+        gender: userData.gender || '',
+        address: {
+          street: userData.address?.street || '',
+          city: userData.address?.city || '',
+          state: userData.address?.state || '',
+          zipCode: userData.address?.zipCode || '',
+          country: userData.address?.country || '',
+        },
+      });
+    }
+  }, [userData]);
 
-	// Handle save and API call
-	const handleSaveProfile = async () => {
-		try {
-			await updateUser({
-				id,
-				updatedData: {
-					fullName: profile.name,
-					email: profile.email,
-					phone: profile.phone,
-				},
-			}).unwrap();
-			alert('Profile updated successfully!');
-			setIsEditing(false);
-		} catch (err) {
-			console.error('Error updating profile:', err);
-			alert('Failed to update profile.');
-		}
-	};
+  const handleEditToggle = () => setIsEditing(!isEditing);
 
-	if (isLoading) return <Alert color='info'>Loading profile...</Alert>;
-	if (error) return <Alert color='danger'>Failed to load user data.</Alert>;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    if (name.startsWith('address.')) {
+      const key = name.split('.')[1];
+      setProfile((prev) => ({
+        ...prev,
+        address: { ...prev.address, [key]: value },
+      }));
+    } else {
+      setProfile((prev) => ({ ...prev, [name]: value }));
+    }
+  };
 
-	return (
-		<PageWrapper title={`${userData?.fullName || 'Employee Profile'}`}>
-			<Page>
-				<div className='pt-3 pb-5 d-flex align-items-center'>
-					<span className='display-4 fw-bold me-3'>{userData?.fullName}</span>
-					<span className='border border-success border-2 text-success fw-bold px-3 py-2 rounded'>
-						{userData?.role}
-					</span>
-				</div>
+  const handleSaveProfile = async () => {
+    try {
+      await updateUser({
+        id: id!,
+        updatedData: profile,
+      }).unwrap();
+      alert('Profile updated successfully!');
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      alert('Failed to update profile.');
+    }
+  };
 
-				<div className='row'>
-					<div className='col-lg-4'>
-						<Card className='shadow-3d-info'>
-							<CardBody className='text-center'>
-								<Avatar
-									src={Profile}
-									style={{ width: '300px', height: '200px', objectFit: 'cover' }}
-								/>
-							</CardBody>
-						</Card>
-					</div>
+  const handleProfileImageClick = () => {
+    fileInputRef.current?.click();
+  };
 
-					<div className='col-lg-8'>
-						<Card className='shadow-3d-primary'>
-							<CardHeader className='d-flex justify-content-between align-items-center'>
-								<CardTitle className='h4 mb-0'>My Profile</CardTitle>
-								<button
-									className='btn btn-outline-primary'
-									onClick={handleEditToggle}
-								>
-									{isEditing ? 'Cancel' : 'Edit'}
-								</button>
-							</CardHeader>
+  const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-							<CardBody>
-								{!isEditing ? (
-									<>
-										<p><strong>Name:</strong> {profile.name }</p>
-										<p><strong>Email:</strong> {profile.email}</p>
-										<p><strong>Phone:</strong> {profile.phone}</p>
-									</>
-								) : (
-									<form>
-										<div className='mb-3'>
-											<label>Name</label>
-											<input
-												type='text'
-												className='form-control'
-												name='name'
-												value={profile.name}
-												onChange={handleChange}
-											/>
-										</div>
-										<div className='mb-3'>
-											<label>Email</label>
-											<input
-												type='email'
-												className='form-control'
-												name='email'
-												value={profile.email}
-												onChange={handleChange}
-											/>
-										</div>
-										<div className='mb-3'>
-											<label>Phone</label>
-											<input
-												type='text'
-												className='form-control'
-												name='phone'
-												value={profile.phone}
-												onChange={handleChange}
-											/>
-										</div>
-										<button
-											type='button'
-											className='btn btn-success'
-											onClick={handleSaveProfile}
-											disabled={isUpdating}
-										>
-											{isUpdating ? 'Saving...' : 'Save'}
-										</button>
-									</form>
-								)}
-							</CardBody>
-						</Card>
-					</div>
-				</div>
-			</Page>
-		</PageWrapper>
-	);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const imageDataUrl = reader.result as string;
+      setProfile((prev) => ({ ...prev, profilePicture: imageDataUrl }));
+
+      try {
+        await updateUser({
+          id: id!,
+          updatedData: { ...profile, profilePicture: imageDataUrl },
+        }).unwrap();
+
+        alert('Profile picture updated successfully!');
+      } catch (err) {
+        console.error('Error updating profile picture:', err);
+        alert('Failed to update profile picture.');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  if (isLoading) return <LoadingWrapper />;
+  if (error) return <ErrorWrapper />;
+
+  return (
+    <PageWrapper title={userData?.fullName || 'Employee Profile'}>
+      <Page>
+        <div className="pt-3 pb-5 d-flex align-items-center">
+          <span className="display-4 fw-bold me-3">{userData?.fullName}</span>
+          <span className="border border-success border-2 text-success fw-bold px-3 py-2 rounded">
+            {userData?.role}
+          </span>
+        </div>
+
+        <div className="row">
+          <div className="col-lg-4 position-relative">
+            <Card
+              className="shadow-3d-info"
+              style={{ height: '350px', objectFit: 'cover', cursor: 'pointer' }}
+              onClick={handleProfileImageClick}
+            >
+              <CardBody className="text-center p-0">
+                <Avatar
+                  src={profile.profilePicture || BackupProfile}
+                  style={{ width: '300px', height: '300px', objectFit: 'cover' }}
+                />
+                <div
+                  style={{
+                      position: 'absolute',
+                    bottom: '70px',
+                    right: 'calc(50% - 150px + 15px)', 
+                    backgroundColor: '#007bff',
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    color: 'white',
+                    fontSize: '30px',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 0 5px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  +
+                </div>
+              </CardBody>
+            </Card>
+            {/* Hidden file input */}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleProfileImageChange}
+            />
+          </div>
+
+          <div className="col-lg-8">
+            <Card className="shadow-3d-primary">
+              <CardHeader className="d-flex justify-content-between align-items-center">
+                <CardTitle className="h4 mb-0">My Profile</CardTitle>
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={handleEditToggle}
+                >
+                  {isEditing ? 'Cancel' : 'Edit'}
+                </button>
+              </CardHeader>
+
+              <CardBody>
+                {!isEditing ? (
+                  <>
+                    <p>
+                      <strong>Name:</strong> {profile.fullName}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {profile.email}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {profile.phoneNumber}
+                    </p>
+                    <p>
+                      <strong>Gender:</strong> {profile.gender}
+                    </p>
+                    <p>
+                      <strong>Date of Birth:</strong> {profile.dateOfBirth}
+                    </p>
+                    <p>
+                      <strong>Address:</strong>
+                    </p>
+                    <ul>
+                      <li>{profile.address.street}</li>
+                      <li>
+                        {profile.address.city}, {profile.address.state}
+                      </li>
+                      <li>
+                        {profile.address.zipCode}, {profile.address.country}
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <form>
+                    <div className="mb-3">
+                      <label>Full Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="fullName"
+                        value={profile.fullName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        value={profile.email}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Phone Number</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="phoneNumber"
+                        value={profile.phoneNumber}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Gender</label>
+                      <select
+                        className="form-control"
+                        name="gender"
+                        value={profile.gender}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+                    <div className="mb-3">
+                      <label>Date of Birth</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="dateOfBirth"
+                        value={profile.dateOfBirth}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Street</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="address.street"
+                        value={profile.address.street}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>City</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="address.city"
+                        value={profile.address.city}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>State</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="address.state"
+                        value={profile.address.state}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Zip Code</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="address.zipCode"
+                        value={profile.address.zipCode}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label>Country</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="address.country"
+                        value={profile.address.country}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={handleSaveProfile}
+                      disabled={isUpdating}
+                    >
+                      {isUpdating ? 'Saving...' : 'Save'}
+                    </button>
+                  </form>
+                )}
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+      </Page>
+    </PageWrapper>
+  );
 };
 
 export default EmployeePage;
-

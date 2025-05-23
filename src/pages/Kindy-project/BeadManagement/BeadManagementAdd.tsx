@@ -10,7 +10,8 @@ import Textarea from '../../../components/bootstrap/forms/Textarea';
 import Select from '../../../components/bootstrap/forms/Select';
 import { useAddBeadMutation, useDeleteBeadMutation, useUpdateBeadMutation, useUploadBeadImageMutation, useUploadBeadImagesMutation } from '../../../redux/api/beadApi';
 import { IBead } from '../../../types/bead';
-import { useGetThreadsQuery } from '../../../redux/api/thredApi';
+import { useGetThreadsByOwnerQuery, useGetThreadsQuery } from '../../../redux/api/thredApi';
+import { useGetAllUsersQuery } from '../../../redux/api/AuthApi';
 
 
 interface IBeadAddModalProps {
@@ -39,6 +40,21 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
   });
 
   const threads = threadsResponse?.data?.data || [];
+
+ const [searchText, setSearchText] = useState('');
+
+  const [selectedUserId, setSelectedUserId] = useState('');
+
+  // Fetch all users (already present)
+  const { data: users = [], isLoading: isUsersLoading } = useGetAllUsersQuery({ pageNo: 1, pageSize: 100 });
+
+  // Fetch threads by owner (selected user)
+  // skip query if no user selected
+  const { data: threadsByOwnerResponse, isLoading: isOwnerThreadsLoading } = useGetThreadsByOwnerQuery(selectedUserId, {
+    skip: !selectedUserId,
+  });
+  const threadsByOwner = threadsByOwnerResponse?.data || [];
+  console.log("threadsByOwner",threadsByOwner);
   
 
 
@@ -244,26 +260,45 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
                   <Input name='beadType' onChange={formik.handleChange} value={formik.values.beadType} required />
                 </FormGroup>
 
-                <FormGroup id='threadId' label='ThreadID' className='col-md-6'>
-                  <Select
-                    name='threadId'
-                    onChange={formik.handleChange}
-                    value={formik.values.threadId}
-                    ariaLabel='Select ThreadId'
-                  >
-                    <option value=''>Select a thread</option>
-                    { threads.map((thread: any) => (
-                      <option key={thread._id} value={thread._id}>
-                        {thread.threadName}
-                      </option>
-                    ))}
-                    {!isThreadsLoading && Array.isArray(threads) && threads.map((thread: any) => (
-                      <option key={thread._id} value={thread._id}>
-                        {thread.threadName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+                <FormGroup label="Select User" className="col-md-6">
+        <Select
+          name="userId"
+          ariaLabel="Select User"
+          value={selectedUserId}
+          onChange={(e : any) => {
+            const userId = e.target.value;
+            setSelectedUserId(userId);
+            // Reset selected threadId in formik when user changes
+            formik.setFieldValue('threadId', '');
+          }}
+          disabled={isUsersLoading}
+        >
+          <option value="">Select a user</option>
+          {users.map((user: any) => (
+            <option key={user._id} value={user._id}>
+              {user.fullName}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
+
+      {/* Thread Select */}
+      <FormGroup label="Select User Thread " className="col-md-6">
+        <Select
+          name="threadId"
+          ariaLabel="Select Thread"
+          onChange={formik.handleChange}
+          value={formik.values.threadId}
+          disabled={!selectedUserId || isOwnerThreadsLoading}
+        >
+          <option value="">Select a thread</option>
+          {threadsByOwner.map((thread: any) => (
+            <option key={thread._id} value={thread._id}>
+              {thread.threadName}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
               </div>
             </div>
 
@@ -471,24 +506,7 @@ const BeadAddModal: FC<IBeadAddModalProps> = ({ id, isOpen, setIsOpen, editItem,
             </div>
 
             <div className='col-md-12'>
-              {/* <h5 className='mb-3'>Additional Information</h5> */}
               <div className='row g-3'>
-                {/* <FormGroup id='isActive' label='Status' className='col-md-3'>
-                  <div className="form-check form-switch">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="isActive"
-                      name="isActive"
-                      checked={formik.values.isActive}
-                      onChange={formik.handleChange}
-                    />
-                    <label className="form-check-label" htmlFor="isActive">
-                      {formik.values.isActive ? 'Active' : 'Inactive'}
-                    </label>
-                  </div>
-                </FormGroup> */}
-
                 <FormGroup id='description' label='Description' className='col-md-12'>
                   <Textarea
                     name='description'

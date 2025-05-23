@@ -25,6 +25,8 @@ import { useGetBeadsQuery, useDeleteBeadMutation } from '../../../redux/api/bead
 import showNotification from '../../../components/extras/showNotification';
 import Modal, { ModalBody, ModalHeader } from '../../../components/bootstrap/Modal';
 import QrTemplateModal from '../../kindy-components/QrTemplateModal';
+import ErrorWrapper from '../other/onError';
+import LoadingWrapper from '../other/onLoading';
 
 const safeGetColorNameWithIndex = (index?: string | number) => {
   if (index === undefined || index === null) return 'primary';
@@ -122,8 +124,8 @@ const BeadManagement = () => {
     }
   };
 
-  if (isLoading) return <div className='text-center py-5'>Loading beads...</div>;
-  if (isError) return <div className='text-center py-5'>Error loading beads data</div>;
+  if (isLoading) return  <LoadingWrapper />;
+  if (isError) return <ErrorWrapper />;
 
   return (
     <PageWrapper title={demoPagesMenu.crm.subMenu.customersList.text}>
@@ -247,7 +249,7 @@ const BeadManagement = () => {
                                 <div
                                   className={`bg-l${darkModeStatus ? 'o25' : '25'}-${safeGetColorNameWithIndex(i?._id)} text-${safeGetColorNameWithIndex(i?._id)} rounded-2 d-flex align-items-center justify-content-center`}
                                 >
-                                  <span className='fw-bold'>{getFirstLetter(i?.beadName || '')}</span>
+                                  <span className='fw-bold'>{getFirstLetter(i?.beadName || 'abc')}</span>
                                 </div>
                               </div>
                             </div>

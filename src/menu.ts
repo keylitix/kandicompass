@@ -40,16 +40,16 @@ export const dashboardPagesMenu = {
 		icon: 'Dashboard', 
 		subMenu: null,
 	  },
-	  BeadManagement: {
-		id: 'BeadManagement',
-		text: 'Bead Management',
-		path: '/bead-management',
-		icon: 'Category', 
-	  },
 	  Thred: {
 		id: 'Thred',
 		text: 'Thred',
 		path: '/thred',
+		icon: 'Category', 
+	  },
+	    BeadManagement: {
+		id: 'BeadManagement',
+		text: 'Bead Management',
+		path: '/bead-management',
 		icon: 'Category', 
 	  },
 	//   QrCodeGeneration: {

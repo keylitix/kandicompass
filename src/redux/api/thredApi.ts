@@ -19,6 +19,13 @@ interface ThreadResponse {
   message: string;
   statusCode: number;
 }
+interface ThreadsByOwnerResponse {
+  data: IThread[];
+  isSuccess: boolean;
+  message?: string;
+  statusCode?: number;
+}
+
 
 export const threadApi = createApi({
   reducerPath: 'threadApi',
@@ -85,6 +92,11 @@ export const threadApi = createApi({
         }),
         invalidatesTags: (result, error, { threadId }) => [{ type: 'Thread', id: threadId }],
       }),
+        // 🔹 Get threads by Owner ID
+    getThreadsByOwner: builder.query<ThreadsByOwnerResponse, string>({
+      query: (ownerId) => `/getByOwner/${ownerId}`,
+      providesTags: ['Thread'],
+    }),
   }),
 });
 
@@ -95,4 +107,5 @@ export const {
   useUpdateThreadMutation,
   useDeleteThreadMutation,
   useUploadThreadImageMutation,
+  useGetThreadsByOwnerQuery,
 } = threadApi;

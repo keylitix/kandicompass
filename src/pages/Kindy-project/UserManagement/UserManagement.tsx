@@ -251,7 +251,7 @@ const UserManagement = () => {
                                 <div className="flex-grow-1">
                                   <div className="fs-6 fw-bold">{user.fullName || 'No Name'}</div>
                                   <div className="text-muted">
-                                    <small>@{user.username || 'No username'}</small>
+                                    <small>@{user.fullName || 'No username'}</small>
                                   </div>
                                 </div>
                               </div>

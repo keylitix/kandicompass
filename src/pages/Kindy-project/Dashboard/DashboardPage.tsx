@@ -40,6 +40,8 @@ import MixedLineColumn from '../../documentation/charts/chart-mixed/MixedLineCol
 import RadarBasic from '../../documentation/charts/chart-radar/RadarBasic';
 import TreeMapBasic from '../../documentation/charts/chart-tree-map/TreeMapBasic';
 import DonutBasic from '../../documentation/charts/chart-pieDonut/DonutBasic';
+import ErrorWrapper from '../other/onError';
+import LoadingWrapper from '../other/onLoading';
 
 
 const DashboardPage = () => {
@@ -92,8 +94,8 @@ const DashboardPage = () => {
     ],
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
+  if (isLoading) return  <LoadingWrapper />;
+  if (isError) return <ErrorWrapper />;
 
   return (
     <PageWrapper title={demoPagesMenu.sales.subMenu.dashboard.text}>

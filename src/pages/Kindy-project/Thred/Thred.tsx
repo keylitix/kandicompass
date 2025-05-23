@@ -61,7 +61,6 @@ const ThreadManagement = () => {
 const threadsData = Array.isArray(threadsResponse?.data?.data)
   ? threadsResponse.data?.data : [];
 
-  console.log('threadsData', threadsData)
 
   const formik = useFormik({
     initialValues: {
@@ -269,6 +268,7 @@ const threadsData = Array.isArray(threadsResponse?.data?.data)
                               //   src: `${process.env.REACT_APP_API_URL}/${i.qrCode}`,
                               //   threadName: i.threadName
                               // })}
+                               onClick={() => setQrModal({ isOpen: true, src: `${process.env.REACT_APP_API_URL}/${i.qrCode}`, name: i?.threadName })}
                               >
                                 <div
                                   style={{
