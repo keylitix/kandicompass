@@ -9,7 +9,6 @@ import { RootState } from '../../../redux/store/store';
 const DashboardBookingHeader = () => {
 	const { darkModeStatus } = useDarkMode();
 	const user = useSelector((state: RootState) => state.auth.user);
-	console.log("user",user);
 	
 	
 	return (
