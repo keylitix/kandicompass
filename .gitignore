@@ -1,160 +1,327 @@
 # ===================
+
 # Git
+
 # ===================
+
 *.orig
+
 .BACKUP.
+
 .BASE.
+
 .LOCAL.
+
 .REMOTE.
+
 *_BACKUP_*.txt
+
 *_BASE_*.txt
+
 *_LOCAL_*.txt
+
 *_REMOTE_*.txt
 
+
+
 # ===================
+
 # IntelliJ / JetBrains IDEs (including WebStorm, PyCharm, etc.)
+
 # ===================
+
 .idea/
+
 *.iml
+
 modules.xml
+
 .idea/misc.xml
+
 *.ipr
+
 .idea/sonarlint
+
 .idea/httpRequests
 
+
+
 # ===================
+
 # macOS
+
 # ===================
+
 .DS_Store
+
 .AppleDouble
+
 .LSOverride
+
 ._*
+
 .DocumentRevisions-V100
+
 .fseventsd
+
 .Spotlight-V100
+
 .TemporaryItems
+
 .Trashes
+
 .VolumeIcon.icns
+
 .com.apple.timemachine.donotpresent
+
 .AppleDB
+
 .AppleDesktop
+
 Network Trash Folder
+
 .apdisk
 
+
+
 # ===================
+
 # Node / Yarn / npm
+
 # ===================
+
 node_modules/
+
 jspm_packages/
+
 bower_components/
+
 web_modules/
+
 logs
+
 *.log
+
 npm-debug.log*
+
 yarn-debug.log*
+
 yarn-error.log*
+
 lerna-debug.log*
+
 .pnpm-debug.log*
+
 report.[0-9]*.json
+
 .pids
+
 *.pid
+
 *.seed
+
 *.pid.lock
+
 lib-cov
+
 coverage
+
 *.lcov
+
 .nyc_output
+
 .grunt
+
 .lock-wscript
+
 *.tsbuildinfo
+
 .npm
+
 .eslintcache
+
 .rpt2_cache/
+
 .rts2_cache_*/
+
 .node_repl_history
+
 *.tgz
+
 .yarn-integrity
+
 .cache/
+
 .parcel-cache/
+
 .dynamodb/
+
 .fusebox/
+
 .tern-port
+
 .vscode-test
+
 .yarn/*
+
 !.yarn/releases
+
 !.yarn/plugins
+
 !.yarn/sdks
+
 !.yarn/versions
+
 .pnp.*
 
+
+
 # ===================
+
 # Build Folder (Explicitly Included)
+
 # ===================
+
 !build/
 
+
+
 # ===================
+
 # Storybook
+
 # ===================
+
 storybook-static/
 
+
+
 # ===================
+
 # Visual Studio Code
+
 # ===================
+
 .vscode/*
+
 !.vscode/settings.json
+
 !.vscode/tasks.json
+
 !.vscode/launch.json
+
 !.vscode/extensions.json
+
 *.code-workspace
+
 .history/
+
 .ionide
 
-# ===================
-# Windows
-# ===================
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-*.lnk
+
 
 # ===================
-# OpenFrameworks + Visual Studio
+
+# Windows
+
 # ===================
+
+Thumbs.db:encryptable
+
+ehthumbs.db
+
+ehthumbs_vista.db
+
+*.stackdump
+
+[Dd]esktop.ini
+
+$RECYCLE.BIN/
+
+*.cab
+
+*.msi
+
+*.msix
+
+*.msm
+
+*.msp
+
+*.lnk
+
+
+
+# ===================
+
+# OpenFrameworks + Visual Studio
+
+# ===================
+
 /bin/*
+
 !/bin/data/
+
 [Oo]bj/
+
 *.o
+
 [Dd]ebug*/
+
 [Rr]elease*/
+
 .mode
+
 *.app/
+
 *.pyc
+
 *.swp
+
 .svn/
+
 *.pbxuser
+
 *.perspective*
+
 *.mode1v3
+
 *.mode2v3
+
 xcuserdata/
+
 *.xcworkspace
+
 *.depend
+
 *.layout
+
 *.sdf
+
 *.opensdf
+
 *.suo
+
 *.pdb
+
 *.ilk
+
 *.aps
+
 ipch/
+
 .metadata
+
 local.properties
+
 .externalToolBuilders
+
 .directory
+
+config.bat
+
+temp_auto_push.bat
+
+temp_interactive_push.bat
+
+branch_structure.json
